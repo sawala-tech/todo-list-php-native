@@ -9,6 +9,7 @@ require_once __DIR__ . '../../../../helpers.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <link rel="shortcut icon" href="<?= assets('images/favicon.ico') ?>" type="image/x-icon">
+    <title>Todo List</title>
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,3 +21,5 @@ require_once __DIR__ . '../../../../helpers.php';
 </head>
 
 <body>
+
+    <?php include components('navbar') ?>

@@ -26,3 +26,16 @@ if (!function_exists('components')) {
         return __DIR__ . '/components/' . $component . '/index.php';
     }
 }
+
+/**
+ * Checks if the 'url' function does not already exist, and if not, defines it.
+ * 
+ * @param string $path The path to the URL.
+ * @return string The full URL to the path.
+ */
+if (!function_exists('url')) {
+    function url($path)
+    {
+        return '/todo-list-bhaknus/page/' . $path;
+    }
+}
