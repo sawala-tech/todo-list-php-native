@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../../helpers.php';
 include components('templates/header');
 
-$success = true;
+$success = false;
 ?>
 
 <div class="flex items-center justify-center w-full h-screen">
