@@ -1,4 +1,4 @@
-// Used for tailwindcss intellisense
+// Used for tailwindcss intellisense.
 
 /** @type {import('tailwindcss').Config} */
 export const content = ['./**/*.{html,php}'];

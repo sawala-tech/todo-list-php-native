@@ -1,0 +1,11 @@
+// Used to recommend extensions to users of your workspace.
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense for Visual Studio Code
+    "esbenp.prettier-vscode", // Prettier - Code formatter
+    "dbaeumer.vscode-eslint", // ESLint - Integrates ESLint JavaScript into VS Code
+    "aaron-bond.better-comments", // Better Comments - Improve your code commenting by annotating with alert, informational, TODOs, and more
+    "bmewburn.vscode-intelephense-client", // PHP Intelephense - PHP code intelligence for Visual Studio Code
+    "brapifra.phpserver" // PHP Server - Serve project with PHP
+  ]
+}

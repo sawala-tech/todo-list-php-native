@@ -1,6 +1,12 @@
 <?php
 // helpers.php
 
+/**
+ * Checks if the 'assets' function does not already exist, and if not, defines it.
+ * 
+ * @param string $path The path to the asset file.
+ * @return string The full URL to the asset file.
+ */
 if (!function_exists('assets')) {
     function assets($path)
     {
@@ -8,6 +14,12 @@ if (!function_exists('assets')) {
     }
 }
 
+/**
+ * Checks if the 'components' function does not already exist, and if not, defines it.
+ * 
+ * @param string $component The name of the component.
+ * @return string The full file path to the component's index.php file.
+ */
 if (!function_exists('components')) {
     function components($component)
     {
