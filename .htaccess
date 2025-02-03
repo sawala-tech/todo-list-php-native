@@ -1,0 +1,20 @@
+RewriteEngine On
+
+# Redirect root URL to /dashboard (for localhost)
+RewriteCond %{REQUEST_URI} ^/todo-list-bhaknus/$
+RewriteRule ^$ /todo-list-bhaknus/dashboard [R=302,L]
+
+# Redirect root URL to /dashboard (for live server)
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ /dashboard [R=302,L]
+
+# Prevent direct access to /page/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^dashboard$ page/dashboard/index.php [L]
+RewriteRule ^auth/signin$ page/auth/signin/index.php [L]
+RewriteRule ^auth/signup$ page/auth/signup/index.php [L]
+
+# Optional: Catch all for auth routes
+RewriteRule ^(dashboard|auth/[^/]+)$ page/$1/index
