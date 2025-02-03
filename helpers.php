@@ -10,7 +10,7 @@
 if (!function_exists('assets')) {
     function assets($path)
     {
-        return '/assets/' . $path;
+        return '/todo-list-bhaknus/assets/' . $path;
     }
 }
 
