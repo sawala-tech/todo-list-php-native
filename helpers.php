@@ -36,6 +36,6 @@ if (!function_exists('components')) {
 if (!function_exists('url')) {
     function url($path)
     {
-        return '/todo-list-bhaknus/page/' . $path;
+        return '/todo-list-bhaknus/' . $path;
     }
 }
