@@ -1,12 +1,12 @@
 // script.js
 // Custom JavaScript for the To-Do List application
 
-const splashScreen = () => {
+const handleSplashScreen = () => {
     document.body.style.visibility = "visible";
     document.body.style.opacity = "1";
 }
 
-const showHidePassword = () => {
+const handleShowHidePassword = () => {
     const cta = document.getElementById('cta-show-hide-password');
     const openEye = document.getElementById('open-eye');
     const closeEye = document.getElementById('close-eye');
@@ -28,5 +28,38 @@ const showHidePassword = () => {
     }
 }
 
-splashScreen();
-showHidePassword();
+const handleDeleteModal = () => {
+    $(document).ready(function () {
+        $(".modal-edit-trigger, .modal-delete-trigger").on("click", function () {
+            let taskId = $(this).data("id");
+            let taskTitle = $(this).data("title");
+            let taskDescription = $(this).data("description");
+            let taskDeadline = $(this).data("deadline");
+            let taskAttachment = $(this).data("attachment");
+
+            $("#modal-title").text(taskTitle);
+            $("#modal-description").text(taskDescription);
+            $("#modal-deadline").text("Tenggat Waktu: " + taskDeadline);
+            $("#modal-attachment").attr("href", taskAttachment).text(taskAttachment.split("/").pop());
+
+            $("#deleteModal").removeClass("hidden").addClass("flex");
+            $("body").css("overflow", "hidden");
+        });
+
+        $("#closeModal").on("click", function () {
+            $("#deleteModal").addClass("hidden").removeClass("flex");
+            $("body").css("overflow", "auto");
+        });
+
+        $("#deleteModal").on("click", function (e) {
+            if ($(e.target).is("#deleteModal")) {
+                $("#deleteModal").addClass("hidden").removeClass("flex");
+                $("body").css("overflow", "auto");
+            }
+        });
+    });
+}
+
+handleSplashScreen();
+handleShowHidePassword();
+handleDeleteModal();

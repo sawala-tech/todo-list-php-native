@@ -7,7 +7,7 @@ if (strpos($currentPath, 'auth') !== false) {
 }
 ?>
 
-<div class="items-center justify-between bg-white px-[26px] py-[27px] fixed top-0 w-full z-50 <?= $hideNavbar ? 'hidden' : 'flex' ?>">
+<div class="items-center justify-between bg-white px-[26px] py-[27px] fixed top-0 w-full z-40 <?= $hideNavbar ? 'hidden' : 'flex' ?>">
     <a href="<?= url('dashboard') ?>">
         <img src="<?= assets('images/logo.png') ?>" alt="logo" class="h-[46px] w-[208.96px]">
     </a>
