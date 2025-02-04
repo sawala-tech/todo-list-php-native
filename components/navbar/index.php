@@ -13,7 +13,7 @@ if (strpos($currentPath, 'auth') !== false) {
     </a>
     <div class="flex items-center space-x-5">
         <div>
-            <button class="flex items-center justify-center px-5 py-3 space-x-1 text-white bg-green-500 rounded-lg hover:bg-green-700">
+            <button class="flex items-center justify-center px-5 py-3 space-x-1 text-white bg-green-500 rounded-lg hover:bg-green-700" id="addTodoTrigger">
                 <img src="<?= assets('images/icons/plus.svg') ?>" alt="plus" class="w-6 h-6" />
                 <span class="font-semibold">Tambah Tugas</span>
             </button>

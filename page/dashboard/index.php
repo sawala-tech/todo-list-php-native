@@ -84,7 +84,8 @@ foreach ($tasks as $task) {
                                 </div>
                                 <div class="flex space-x-2">
                                     <button
-                                        class="text-[#E53E3E] font-semibold hover:text-red-700 modal-edit-trigger"
+                                        id="deleteTodoTrigger"
+                                        class=" text-[#E53E3E] font-semibold hover:text-red-700"
                                         data-id="<?= htmlspecialchars($task['id']); ?>"
                                         data-title="<?= htmlspecialchars($task['title']); ?>"
                                         data-description="<?= htmlspecialchars($task['description']); ?>"
@@ -94,7 +95,8 @@ foreach ($tasks as $task) {
                                     </button>
                                     <div class="w-px h-full bg-[#CBD5E0]"></div>
                                     <button
-                                        class="text-[#3182CE] font-semibold hover:text-blue-700 modal-delete-trigger"
+                                        id="editTodoTrigger"
+                                        class=" text-[#3182CE] font-semibold hover:text-blue-700"
                                         data-id="<?= htmlspecialchars($task['id']); ?>"
                                         data-title="<?= htmlspecialchars($task['title']); ?>"
                                         data-description="<?= htmlspecialchars($task['description']); ?>"
@@ -111,8 +113,47 @@ foreach ($tasks as $task) {
         </div>
     <?php endforeach; ?>
 
-    <!-- Delete Modal -->
-    <div id="deleteModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
+    <!-- Add/Edit Todo Modal -->
+    <div id="addTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
+        <div class="w-full max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6">
+            <h2 class="mb-2 text-xl font-bold">Tugas Baru</h2>
+            <form class="flex flex-col space-y-4">
+                <div class="flex items-center space-x-2">
+                    <label class="w-1/4 text-sm font-semibold">Nama Tugas</label>
+                    <input type="text" class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" />
+                </div>
+                <div class="flex items-center space-x-2">
+                    <label class="w-1/4 text-sm font-semibold">Deskripsi</label>
+                    <textarea class="w-3/4 min-h-20 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Deskripsi Tugas"></textarea>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <label class="w-1/4 text-sm font-semibold">Tenggat Waktu</label>
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" />
+                </div>
+                <div class="flex items-center space-x-2">
+                    <label class="w-1/4 text-sm font-semibold">Lampiran/File</label>
+                    <input type="file" class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                </div>
+                <div class="flex items-center space-x-2">
+                    <label class="w-1/4">Status</label>
+                    <select class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                        <option value="open">Open</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="done">Done</option>
+                    </select>
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700">Simpan</button>
+                    <button id="closeAddTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Todo Modal -->
+    <div id="deleteTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
         <div class="w-full max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6">
             <h2 class="mb-2 text-xl font-bold">Hapus Tugas</h2>
             <p class="text-gray-600">Apakah Anda yakin ingin menghapus tugas ini?</p>
@@ -130,7 +171,7 @@ foreach ($tasks as $task) {
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <button class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700">Ya, Hapus</button>
-                <button id="closeModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100">Batal</button>
+                <button id="closeDeleteTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100">Batal</button>
             </div>
         </div>
     </div>
