@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     handleShowHidePassword();
     handleModal("deleteTodo", ["id", "title", "description", "deadline", "attachment"]);
     handleModal("addTodo");
+
+    if (!isDesktop()) {
+        toggleDropdown();
+        toggleFilterTodo();
+    }
 });
 
 function handleSplashScreen() {
@@ -28,7 +33,7 @@ function handleShowHidePassword() {
 }
 
 function handleModal(type, dataAttributes = []) {
-    const triggers = document.querySelectorAll(`#${type}Trigger`); // Select all delete buttons
+    const triggers = document.querySelectorAll(`#${type}Trigger`);
     const modal = document.getElementById(`${type}Modal`);
     const closeModal = document.getElementById(`close${capitalize(type)}Modal`);
 
@@ -75,4 +80,65 @@ function toggleModal(modal, show) {
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function toggleDropdown() {
+    const dropdownTrigger = document.getElementById("dropdownTrigger");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    if (!dropdownTrigger || !dropdownMenu) return;
+
+    dropdownTrigger.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", e => {
+        if (!dropdownMenu.contains(e.target) && !dropdownTrigger.contains(e.target)) {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
+}
+
+function toggleFilterTodo() {
+    const filterTodoTriggers = document.querySelectorAll("#filterTodoTrigger");
+    const todoListWrappers = document.querySelectorAll("#todoListWrapper");
+
+    if (!filterTodoTriggers.length || !todoListWrappers.length) return;
+
+    const defaultCategory = "open";
+
+    filterTodoTriggers.forEach(trigger => {
+        const type = trigger.getAttribute("data-type");
+
+        if (type === defaultCategory) {
+            trigger.classList.remove("!bg-[#E2E8F0]");
+        } else {
+            trigger.classList.add("!bg-[#E2E8F0]");
+        }
+    });
+
+    todoListWrappers.forEach(wrapper => {
+        wrapper.style.display = wrapper.getAttribute("data-type") === defaultCategory ? "block" : "none";
+    });
+
+    filterTodoTriggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            const selectedType = trigger.getAttribute("data-type");
+
+            todoListWrappers.forEach(wrapper => {
+                wrapper.style.display = wrapper.getAttribute("data-type") === selectedType ? "block" : "none";
+            });
+
+            filterTodoTriggers.forEach(t => t.classList.add("!bg-[#E2E8F0]"));
+            trigger.classList.remove("!bg-[#E2E8F0]");
+        });
+    });
+}
+
+function isDesktop() {
+    window.addEventListener("resize", () => {
+        location.reload();
+    });
+
+    return window.innerWidth >= 1024;
 }

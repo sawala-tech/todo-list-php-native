@@ -45,17 +45,21 @@ foreach ($tasks as $task) {
 
 ?>
 
-<main class="grid grid-cols-3 mt-24">
-    <?php foreach ($statuses as $key => $status): ?>
-        <div class="relative">
-            <!-- Header -->
-            <div class="flex items-center space-x-2 text-white px-6 py-4 rounded-t-lg <?= $status['color'] ?>">
-                <img src="<?= assets('images/icons/' . $status['icon']) ?>" alt="icon" class="w-6 h-6" />
-                <h3 class="text-lg font-semibold"> <?= $status['title'] ?> (<?= $taskCount[$key] ?>) </h3>
+<main class="mt-[6.4rem]">
+    <!-- Filter -->
+    <div class="grid grid-cols-3 max-sm:gap-x-4">
+        <?php foreach ($statuses as $key => $status): ?>
+            <div class="flex items-center space-x-2 text-white md:px-6 md:py-4 max-sm:rounded-full pr-[12.5px] p-2 max-sm:w-fit max-sm:mx-auto <?= $status['color'] ?>" id="filterTodoTrigger" data-type="<?= $key ?>">
+                <img src="<?= assets('images/icons/' . $status['icon']) ?>" alt="icon" class="w-5 h-5 md:w-6 md:h-6" />
+                <h3 class="text-sm font-semibold md:text-lg"><?= $status['title'] ?> <span class="max-sm:hidden">(<?= $taskCount[$key] ?>)</span></h3>
             </div>
+        <?php endforeach; ?>
+    </div>
 
-            <!-- Task List -->
-            <div class="flex flex-col h-full min-h-[calc(100vh-11rem)] space-y-4 p-4 <?= $status['bg'] ?>">
+    <!-- Task List -->
+    <div class="grid grid-cols-3">
+        <?php foreach ($statuses as $key => $status): ?>
+            <div class="flex flex-col h-full min-h-[calc(100vh-11rem)] space-y-4 p-4 max-sm:col-span-3 md:<?= $status['bg'] ?>" id="todoListWrapper" data-type="<?= $key ?>">
                 <?php if ($taskCount[$key] === 0): ?>
                     <!-- Empty State -->
                     <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
@@ -67,7 +71,7 @@ foreach ($tasks as $task) {
                     <!-- Task Cards -->
                     <?php foreach ($tasks as $task): ?>
                         <?php if ($task['status'] === $key): ?>
-                            <div class="flex flex-col p-4 space-y-5 bg-white rounded-lg shadow-md">
+                            <div class="flex flex-col w-full p-4 space-y-5 bg-white rounded-lg shadow-md">
                                 <div class="flex flex-col space-y-2">
                                     <h4 class="font-semibold"><?= htmlspecialchars($task['title']) ?></h4>
                                     <p class="text-gray-600 line-clamp-2"><?= htmlspecialchars($task['description']) ?></p>
@@ -110,33 +114,33 @@ foreach ($tasks as $task) {
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
 
     <!-- Add/Edit Todo Modal -->
     <div id="addTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
-        <div class="w-full max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6">
+        <div class="w-full md:max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6 max-sm:mx-4">
             <h2 class="mb-2 text-xl font-bold">Tugas Baru</h2>
             <form class="flex flex-col space-y-4">
-                <div class="flex items-center space-x-2">
-                    <label class="w-1/4 text-sm font-semibold">Nama Tugas</label>
-                    <input type="text" class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" />
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Nama Tugas</label>
+                    <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" />
                 </div>
-                <div class="flex items-center space-x-2">
-                    <label class="w-1/4 text-sm font-semibold">Deskripsi</label>
-                    <textarea class="w-3/4 min-h-20 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Deskripsi Tugas"></textarea>
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Deskripsi</label>
+                    <textarea class="md:w-3/4 min-h-20 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Deskripsi Tugas"></textarea>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <label class="w-1/4 text-sm font-semibold">Tenggat Waktu</label>
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" />
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" />
                 </div>
-                <div class="flex items-center space-x-2">
-                    <label class="w-1/4 text-sm font-semibold">Lampiran/File</label>
-                    <input type="file" class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
+                    <input type="file" class="md:w-3/4 h-10py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                 </div>
-                <div class="flex items-center space-x-2">
-                    <label class="w-1/4">Status</label>
-                    <select class="w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="md:w-1/4">Status</label>
+                    <select class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                         <option value="open">Open</option>
                         <option value="in_progress">In Progress</option>
                         <option value="done">Done</option>
@@ -154,17 +158,17 @@ foreach ($tasks as $task) {
 
     <!-- Delete Todo Modal -->
     <div id="deleteTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
-        <div class="w-full max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6">
+        <div class="w-full md:max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6 max-sm:mx-4">
             <h2 class="mb-2 text-xl font-bold">Hapus Tugas</h2>
             <p class="text-gray-600">Apakah Anda yakin ingin menghapus tugas ini?</p>
             <div class="flex flex-col p-4 space-y-2 shadow rounded-xl">
                 <h4 class="font-semibold" id="modal-title"></h4>
                 <p class="text-gray-600 line-clamp-2" id="modal-description"></p>
-                <div class="flex items-center space-x-2">
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
                     <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 hover:underline"></a>
                 </div>
-                <div class="flex items-center space-x-2">
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <img src="<?= assets('images/icons/clock.svg') ?>" alt="clock" class="w-5 h-5" />
                     <p id="modal-deadline"></p>
                 </div>
