@@ -1,12 +1,20 @@
 <?php
 require_once __DIR__ . '/../../../helpers.php';
+require_once __DIR__ . '/../../../assets/php/functions.php';
+
 include components('templates/header');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    signin($username, $password);
+}
 ?>
 
 <div class="flex items-center justify-center w-full h-screen">
     <div class="flex flex-col items-center justify-center w-full bg-white rounded-xl p-9 space-y-11 max-w-[500px]">
         <img src="<?= assets("images/logo.png") ?>" alt="logo" class="w-[261.29px] h-[58px]" />
-        <form class="flex flex-col items-center justify-center w-full space-y-6">
+        <form class="flex flex-col items-center justify-center w-full space-y-6" method="POST">
             <h1 class="text-3xl font-semibold">Masuk</h1>
             <div class="flex flex-col space-y-1.5 w-full">
                 <label for="username" class="text-sm font-semibold">Username <span class="text-red-500">*</span></label>

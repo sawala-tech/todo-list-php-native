@@ -26,7 +26,8 @@ if (strpos($currentPath, 'auth') !== false) {
         </div>
         <div class="w-px h-8 bg-gray-400"></div>
         <div>
-            <a class="font-semibold text-red-500 cursor-pointer hover:text-red-700">Keluar</a>
+            <a class="font-semibold text-red-500 cursor-pointer hover:text-red-700" href="<?= url('auth/signout') ?>"
+            >Keluar</a>
         </div>
     </div>
 </div>

@@ -1,14 +1,25 @@
 <?php
 require_once __DIR__ . '/../../../helpers.php';
+require '../../../assets/php/functions.php';
 include components('templates/header');
 
 $success = false;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $result = signup($_POST['username'], $_POST['password']);
+
+    if ($result) {
+        $success = true;
+    } else {
+        echo "<script>alert('Gagal membuat akun!')</script>";
+    }
+}
 ?>
 
 <div class="flex items-center justify-center w-full h-screen">
     <div class="flex flex-col items-center justify-center w-full bg-white rounded-xl p-9 space-y-11 max-w-[500px]">
         <img src="<?= assets("images/logo.png") ?>" alt="logo" class="w-[261.29px] h-[58px]" />
-        <form class="flex-col items-center justify-center w-full space-y-6 <?= $success ? 'hidden' : 'flex' ?>">
+        <form class="flex-col items-center justify-center w-full space-y-6 <?= $success ? 'hidden' : 'flex' ?>" method="POST">
             <h1 class="text-3xl font-semibold">Buat Akun</h1>
             <div class="flex flex-col space-y-1.5 w-full">
                 <label for="username" class="text-sm font-semibold">Username <span class="text-red-500">*</span></label>
