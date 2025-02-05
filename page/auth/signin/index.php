@@ -1,6 +1,14 @@
 <?php
 require_once __DIR__ . '/../../../helpers.php';
+require_once __DIR__ . '/../../../assets/php/functions.php';
+
 include components('templates/header');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    signin($username, $password);
+}
 ?>
 
 <div class="flex items-center justify-center w-full h-screen">

@@ -1,40 +1,37 @@
 <?php
 require_once __DIR__ . '/../../helpers.php';
+require_once __DIR__ . '/../../assets/php/functions.php';
 include components('templates/header');
+
+checkLogin('auth/signin');
+
+$tasks = getTasks();
+
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $id = $_GET['id'];
+    deleteTask($id);
+}
+
+//check if http method is post
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $deadline = $_POST['deadline'];
+    $attachment = $_FILES['attachment'];
+    $status = $_POST['status'];
+
+    if(addTask($title, $description, $deadline, $attachment, $status)){
+        header('Location: ' . url('dashboard'));
+    }else{
+        echo "<script>alert('Gagal menambahkan tugas')</script>";
+    }
+}
 
 // Task Statuses & Initial Count
 $statuses = [
     'open' => ['title' => 'Open', 'color' => 'bg-teal-500', 'bg' => 'bg-blue-100', 'icon' => 'sun.svg'],
     'in_progress' => ['title' => 'In Progress', 'color' => 'bg-blue-500', 'bg' => 'bg-gray-100', 'icon' => 'sync.svg'],
     'done' => ['title' => 'Done', 'color' => 'bg-purple-500', 'bg' => 'bg-blue-100', 'icon' => 'checked.svg']
-];
-
-// Task Data
-$tasks = [
-    [
-        "id" => 1,
-        "title" => "Tugas 1 : Belajar HTML",
-        "description" => "Buat contoh struktur HTML sederhana untuk pembuatan aplikasi web",
-        "deadline" => "2021-08-20",
-        "status" => "open",
-        "attachment" => "https://pdfobject.com/pdf/sample.pdf",
-    ],
-    [
-        "id" => 2,
-        "title" => "Tugas 2 : Belajar CSS",
-        "description" => "Buat contoh styling CSS sederhana untuk pembuatan aplikasi web",
-        "deadline" => "2021-08-21",
-        "status" => "open",
-        "attachment" => "https://pdfobject.com/pdf/sample.pdf",
-    ],
-    [
-        "id" => 3,
-        "title" => "Tugas 3 : Belajar JavaScript",
-        "description" => "Buat contoh interaksi JavaScript sederhana untuk pembuatan aplikasi web",
-        "deadline" => "2021-08-22",
-        "status" => "done",
-        "attachment" => "https://pdfobject.com/pdf/sample.pdf",
-    ],
 ];
 
 // Count tasks per status
@@ -121,26 +118,26 @@ foreach ($tasks as $task) {
     <div id="addTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
         <div class="w-full md:max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6 max-sm:mx-4">
             <h2 class="mb-2 text-xl font-bold">Tugas Baru</h2>
-            <form class="flex flex-col space-y-4">
+            <form class="flex flex-col space-y-4" action="<?= url('dashboard') ?>" method="POST" enctype="multipart/form-data">
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Nama Tugas</label>
-                    <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" />
+                    <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas"  name="title" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Deskripsi</label>
-                    <textarea class="md:w-3/4 min-h-20 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Deskripsi Tugas"></textarea>
+                    <textarea class="md:w-3/4 min-h-20 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Deskripsi Tugas" name="description"></textarea>
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" />
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
-                    <input type="file" class="md:w-3/4 h-10py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <input type="file" class="md:w-3/4 h-10py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" name="attachment" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="md:w-1/4">Status</label>
-                    <select class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                    <select class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm" name="status">
                         <option value="open">Open</option>
                         <option value="in_progress">In Progress</option>
                         <option value="done">Done</option>
@@ -174,11 +171,22 @@ foreach ($tasks as $task) {
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
-                <button class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700">Ya, Hapus</button>
+                <button class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700" onclick="deleteTask()">Ya, Hapus</button>
                 <button id="closeDeleteTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100" type="button">Batal</button>
             </div>
         </div>
     </div>
 </main>
+
+<script>
+    function deleteTask() {
+        const id = document.getElementById('deleteTodoTrigger').dataset.id;
+        fetch(`<?= url('dashboard') ?>?id=${id}`, {
+            method: 'DELETE'
+        }).then(() => {
+            window.location.reload();
+        });
+    }
+</script>
 
 <?php include components('templates/footer'); ?>

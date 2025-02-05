@@ -1,8 +1,19 @@
 <?php
 require_once __DIR__ . '/../../../helpers.php';
+require '../../../assets/php/functions.php';
 include components('templates/header');
 
 $success = false;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $result = signup($_POST['username'], $_POST['password']);
+
+    if ($result) {
+        $success = true;
+    } else {
+        echo "<script>alert('Gagal membuat akun!')</script>";
+    }
+}
 ?>
 
 <div class="flex items-center justify-center w-full h-screen">
