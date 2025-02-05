@@ -65,7 +65,7 @@ foreach ($tasks as $task) {
                     <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
                         <img src="<?= assets('images/icons/edit.svg') ?>" alt="edit" class="w-20 h-20 mb-4" />
                         <h4 class="font-semibold">Belum ada tugas</h4>
-                        <p>Segera tambahkan tugas baru kamu sekarang!</p>
+                        <p class="max-sm:max-w-72">Segera tambahkan tugas baru kamu sekarang!</p>
                     </div>
                 <?php else: ?>
                     <!-- Task Cards -->
