@@ -164,11 +164,11 @@ foreach ($tasks as $task) {
             <div class="flex flex-col p-4 space-y-2 shadow rounded-xl">
                 <h4 class="font-semibold" id="modal-title"></h4>
                 <p class="text-gray-600 line-clamp-2" id="modal-description"></p>
-                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                <div class="flex items-center gap-2">
                     <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
-                    <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 hover:underline"></a>
+                    <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 truncate hover:underline max-sm:max-w-60"></a>
                 </div>
-                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                <div class="flex items-center gap-2">
                     <img src="<?= assets('images/icons/clock.svg') ?>" alt="clock" class="w-5 h-5" />
                     <p id="modal-deadline"></p>
                 </div>
