@@ -146,7 +146,7 @@ foreach ($tasks as $task) {
 
                 <div class="grid grid-cols-2 gap-4">
                     <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700">Simpan</button>
-                    <button id="closeAddTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100">Batal</button>
+                    <button id="closeAddTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100" type="button">Batal</button>
                 </div>
             </form>
         </div>
@@ -171,7 +171,7 @@ foreach ($tasks as $task) {
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <button class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700">Ya, Hapus</button>
-                <button id="closeDeleteTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100">Batal</button>
+                <button id="closeDeleteTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100" type="button">Batal</button>
             </div>
         </div>
     </div>
