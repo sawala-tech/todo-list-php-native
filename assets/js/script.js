@@ -28,38 +28,40 @@ function handleShowHidePassword() {
 }
 
 function handleModal(type, dataAttributes = []) {
-    const trigger = document.getElementById(`${type}Trigger`);
+    const triggers = document.querySelectorAll(`#${type}Trigger`); // Select all delete buttons
     const modal = document.getElementById(`${type}Modal`);
     const closeModal = document.getElementById(`close${capitalize(type)}Modal`);
 
-    if (!trigger || !modal || !closeModal) return;
+    if (!triggers.length || !modal || !closeModal) return;
 
-    trigger.addEventListener("click", () => {
-        if (dataAttributes.length) {
-            dataAttributes.forEach(attr => {
-                const element = document.getElementById(`modal-${attr}`);
-                if (element) {
-                    let value = trigger.dataset[attr];
-                    if (attr === "deadline") {
-                        value = new Date(value).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric"
-                        }).replace(/ /g, " ");
+    triggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            if (dataAttributes.length) {
+                dataAttributes.forEach(attr => {
+                    const element = document.getElementById(`modal-${attr}`);
+                    if (element) {
+                        let value = trigger.dataset[attr];
+                        if (attr === "deadline") {
+                            value = new Date(value).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric"
+                            }).replace(/ /g, " ");
+                        }
+                        if (element.tagName === "A") {
+                            element.setAttribute("href", value);
+                            element.textContent = value.split("/").pop();
+                        } else {
+                            element.textContent = value;
+                        }
                     }
-                    if (element.tagName === "A") {
-                        element.setAttribute("href", value);
-                        element.textContent = value.split("/").pop();
-                    } else {
-                        element.textContent = value;
-                    }
-                }
-            });
-        }
-        toggleModal(modal, true);
+                });
+            }
+            toggleModal(modal, true);
+        });
     });
 
-    if (closeModal) closeModal.addEventListener("click", () => toggleModal(modal, false));
+    closeModal.addEventListener("click", () => toggleModal(modal, false));
     modal.addEventListener("click", e => e.target === modal && toggleModal(modal, false));
 }
 
