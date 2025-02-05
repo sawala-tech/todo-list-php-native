@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../helpers.php';
-require_once __DIR__ . '/../../assets/php/functions.php';
+require_once __DIR__ . '/../../assets/helpers/libs.php';
+require_once __DIR__ . '/../../assets/helpers/functions.php';
 include components('templates/header');
 
 checkLogin('auth/signin');
@@ -20,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $attachment = $_FILES['attachment'];
     $status = $_POST['status'];
 
-    if(addTask($title, $description, $deadline, $attachment, $status)){
+    if (addTask($title, $description, $deadline, $attachment, $status)) {
         header('Location: ' . url('dashboard'));
-    }else{
+    } else {
         echo "<script>alert('Gagal menambahkan tugas')</script>";
     }
 }
@@ -121,7 +121,7 @@ foreach ($tasks as $task) {
             <form class="flex flex-col space-y-4" action="<?= url('dashboard') ?>" method="POST" enctype="multipart/form-data">
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Nama Tugas</label>
-                    <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas"  name="title" />
+                    <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" name="title" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Deskripsi</label>

@@ -4,7 +4,7 @@ session_start();
 //DB Connection
 $host = "localhost";
 $username = "root";
-$password = "root";
+$password = "";
 $dbname = "todo_list";
 
 $conn = new mysqli($host, $username, $password, $dbname);
@@ -57,7 +57,8 @@ function signup($username, $password)
     return $conn->query($sql);
 }
 
-function checkLogin($path){
+function checkLogin($path)
+{
     if (!isset($_SESSION['user'])) {
         header('Location: ' . url($path));
     }
@@ -79,11 +80,12 @@ function getTasks()
             $tasks[] = $row;
         }
     }
-    
+
     return $tasks;
 }
 
-function deleteFile($file){
+function deleteFile($file)
+{
     if (file_exists($file)) {
         unlink($file);
     }
@@ -120,7 +122,8 @@ function saveFile($file)
     }
 }
 
-function addTask($title, $description, $deadline, $attachment, $status){
+function addTask($title, $description, $deadline, $attachment, $status)
+{
     global $conn;
     $user_id = $_SESSION['user']['id'];
 
@@ -133,11 +136,8 @@ function addTask($title, $description, $deadline, $attachment, $status){
     if (!$attachment) {
         return false;
     }
-    
+
     $sql = "INSERT INTO tasks (title, description, deadline, attachment, status, user_id) VALUES ('$title', '$description', '$deadline', '$attachment', '$status', $user_id)";
 
     return $conn->query($sql);
 }
-
-
-?>

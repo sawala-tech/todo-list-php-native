@@ -1,10 +1,12 @@
 <?php
+
 $currentPath = $_SERVER['REQUEST_URI'];
 $hideNavbar = false;
 
 if (strpos($currentPath, 'auth') !== false) {
     $hideNavbar = true;
 }
+
 ?>
 
 <div class="items-center justify-between bg-white md:px-[26px] md:py-[27px] p-4 fixed top-0 w-full z-40 <?= $hideNavbar ? 'hidden' : 'flex' ?>">
@@ -21,7 +23,7 @@ if (strpos($currentPath, 'auth') !== false) {
         <div class="flex items-center space-x-1">
             <img src="<?= assets('images/icons/user.svg') ?>" alt="user" class="w-6 h-6" id="dropdownTrigger">
             <p class="hidden font-semibold truncate max-w-48 md:block">
-                Halo, Hamdan Nurachid
+                Halo, <?= $_SESSION['user']['username'] ?>
             </p>
         </div>
         <div class="hidden w-px h-8 bg-gray-400 md:block"></div>
