@@ -42,11 +42,13 @@ function handleModal(type, dataAttributes = []) {
                     if (element) {
                         let value = trigger.dataset[attr];
                         if (attr === "deadline") {
-                            value = new Date(value).toLocaleDateString("en-GB", {
+                            const date = new Date(value).toLocaleDateString("en-GB", {
                                 day: "2-digit",
                                 month: "short",
                                 year: "numeric"
                             }).replace(/ /g, " ");
+
+                            value = `Tenggat Waktu: ${date}`
                         }
                         if (element.tagName === "A") {
                             element.setAttribute("href", value);
