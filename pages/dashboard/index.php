@@ -27,6 +27,7 @@ if ($method === 'POST') {
     $status = $_POST['status'];
 
     if (addTask($title, $description, $deadline, $attachment, $status)) {
+        header('Location: ' . url('dashboard'));
         echo "
         <script>
             Swal.fire({
@@ -35,7 +36,6 @@ if ($method === 'POST') {
             })
         </script>
         ";
-        header('Location: ' . url('dashboard'));
     } else {
         echo "
         <script>
@@ -57,14 +57,15 @@ if ($method === 'PUT') {
     $status = $_POST['status'];
 
     if (updateTask($id, $title, $description, $deadline, $attachment, $status)) {
+        header('Location: ' . url('dashboard'));
         echo "
         <script>
             Swal.fire({
                 title: 'Berhasil mengubah tugas!',
                 icon: 'success',
             })
+        </script>
         ";
-        header('Location: ' . url('dashboard'));
     } else {
         echo "
         <script>
@@ -124,7 +125,7 @@ foreach ($tasks as $task) {
                                     <p class="text-gray-600 line-clamp-2"><?= htmlspecialchars($task['description']) ?></p>
                                     <div class="flex items-center space-x-2">
                                         <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
-                                        <a href="<?= htmlspecialchars(assets("public/" . $task['attachment'])) ?>" target="_blank" class="text-blue-500 truncate hover:underline max-w-60">
+                                        <a href="<?= htmlspecialchars(assets("public/" . $task['attachment'])) ?>" target="_blank" class="text-blue-500 truncate hover:underline max-w-96">
                                             <?= basename($task['attachment']) ?>
                                         </a>
                                     </div>
@@ -181,11 +182,18 @@ foreach ($tasks as $task) {
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
-                    <input type="date" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" name="deadline" min="<?= date('Y-m-d'); ?>" value="<?= date('Y-m-d'); ?>" />
+                    <div class="relative md:w-3/4">
+                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" class="w-full h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" autocomplete="off">
+                        <div class="absolute inset-y-0 flex items-center pointer-events-none end-4 ps-3">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
-                    <input type="file" class="md:w-3/4 h-10py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" name="attachment" />
+                    <input type="file" class="border border-gray-300 rounded-md md:w-3/4 focus:outline-none focus:ring-2 focus:ring-emerald-500" name="attachment" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="md:w-1/4">Status</label>
@@ -221,11 +229,18 @@ foreach ($tasks as $task) {
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
-                    <input type="date" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" name="deadline" min="<?= date('Y-m-d'); ?>" value="<?= date('Y-m-d'); ?>" />
+                    <div class="relative md:w-3/4">
+                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" class="w-full h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" autocomplete="off">
+                        <div class="absolute inset-y-0 flex items-center pointer-events-none end-4 ps-3">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
-                    <input type="file" class="md:w-3/4 h-10py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" name="attachment" />
+                    <input type="file" class="border border-gray-300 rounded-md md:w-3/4 focus:outline-none focus:ring-2 focus:ring-emerald-500" name="attachment" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="md:w-1/4">Status</label>
@@ -254,7 +269,7 @@ foreach ($tasks as $task) {
                 <p class="text-gray-600 line-clamp-2" id="modal-description"></p>
                 <div class="flex items-center gap-2">
                     <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
-                    <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 truncate hover:underline max-w-60"></a>
+                    <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 truncate hover:underline max-w-96"></a>
                 </div>
                 <div class="flex items-center gap-2">
                     <img src="<?= assets('images/icons/clock.svg') ?>" alt="clock" class="w-5 h-5" />

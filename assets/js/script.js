@@ -71,9 +71,15 @@ function handleModal(type, dataAttributes = []) {
                             const name = input.name;
                             const value = trigger.dataset[name];
                             if (input.name === 'deadline') {
-                                input.value = new Date(value).toLocaleDateString("en-GB");
+                                input.value = new Date(value).toISOString().split('T')[0];
                             } else if (input.name === 'attachment') {
-                                // input.value = value.split("/").pop();
+                                // get current path project
+                                const rootPath = window.location.href.split("/").slice(0, -1).join("/");
+                                const publicPath = `${rootPath}/assets/public/`;
+                                const myFile = new File([getBlob(`${publicPath}${value}`)], value.split("/").pop());
+                                const dataTransfer = new DataTransfer();
+                                dataTransfer.items.add(myFile);
+                                // input.files = dataTransfer.files;
                             } else if (input.name === '_method') {
                                 input.value = 'PUT';
                             } else if (input.name === 'status') {
@@ -94,7 +100,6 @@ function handleModal(type, dataAttributes = []) {
     closeModal.addEventListener("click", () => toggleModal(modal, false));
     modal.addEventListener("click", e => e.target === modal && toggleModal(modal, false));
 
-    // clear modal input value
     modal.addEventListener("click", e => {
         if (e.target === modal) {
             modal.querySelectorAll("input, textarea").forEach(input => {
@@ -195,4 +200,16 @@ function isDesktop() {
     });
 
     return window.innerWidth >= 1024;
+}
+
+function getBlob(url) {
+    return new Promise(async (resolve, rejected) => {
+        try {
+            let response = await fetch(url)
+            let data = await response.blob()
+            return resolve(data)
+        } catch (error) {
+            return rejected(error)
+        }
+    })
 }
