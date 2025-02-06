@@ -8,14 +8,14 @@ RewriteRule ^$ /todo-list-bhaknus/dashboard [R=302,L]
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^$ /dashboard [R=302,L]
 
-# Prevent direct access to /page/
+# Prevent direct access to /pages/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^dashboard$ page/dashboard/index.php [L]
-RewriteRule ^auth/signin$ page/auth/signin/index.php [L]
-RewriteRule ^auth/signup$ page/auth/signup/index.php [L]
-RewriteRule ^auth/signout$ page/auth/signout/index.php [L]
+RewriteRule ^dashboard$ pages/dashboard/index.php [L]
+RewriteRule ^auth/signin$ pages/auth/signin/index.php [L]
+RewriteRule ^auth/signup$ pages/auth/signup/index.php [L]
+RewriteRule ^auth/signout$ pages/auth/signout/index.php [L]
 
 # Optional: Catch all for auth routes
-RewriteRule ^(dashboard|auth/[^/]+)$ page/$1/index
+RewriteRule ^(dashboard|auth/[^/]+)$ pages/$1/index

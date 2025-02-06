@@ -23,7 +23,7 @@ if (!function_exists('assets')) {
 if (!function_exists('components')) {
     function components($component)
     {
-        return __DIR__ . '/components/' . $component . '/index.php';
+        return __DIR__ . '/../../components/' . $component . '/index.php';
     }
 }
 

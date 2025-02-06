@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../../../helpers.php';
-require_once __DIR__ . '/../../../assets/php/functions.php';
+require_once __DIR__ . '/../../../assets/helpers/libs.php';
+require_once __DIR__ . '/../../../assets/helpers/functions.php';
 
 include components('templates/header');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="flex items-center justify-center w-full h-screen">
-    <div class="flex flex-col items-center justify-center w-full bg-white rounded-xl p-9 space-y-11 max-w-[500px]">
-        <img src="<?= assets("images/logo.png") ?>" alt="logo" class="w-[261.29px] h-[58px]" />
-        <form class="flex flex-col items-center justify-center w-full space-y-6" method="POST">
-            <h1 class="text-3xl font-semibold">Masuk</h1>
+    <div class="flex flex-col items-center justify-center w-full bg-white rounded-xl p-9 space-y-11 md:max-w-[500px] max-sm:mx-4">
+        <img src="<?= assets("images/logo.png") ?>" alt="logo" class="md:w-[261.29px] md:h-[58px] w-[180.32px] h-10" />
+        <form class="flex flex-col items-center justify-center w-full space-y-6" action="<?= url('auth/signin') ?>" method="POST">
+            <h1 class="text-2xl font-semibold md:text-3xl">Masuk</h1>
             <div class="flex flex-col space-y-1.5 w-full">
                 <label for="username" class="text-sm font-semibold">Username <span class="text-red-500">*</span></label>
                 <input type="text" id="username" name="username" class="w-full h-12 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
