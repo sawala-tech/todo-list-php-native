@@ -230,7 +230,7 @@ foreach ($tasks as $task) {
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
                     <div class="relative md:w-3/4">
-                        <input id="datepicker-format" datepicker datepicker-format="yyyy-mm-dd" type="text" class="w-full h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" autocomplete="off">
+                        <input id="datepicker-formate" datepicker datepicker-formate="yyyy-mm-dd" type="text" class="w-full h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" autocomplete="off">
                         <div class="absolute inset-y-0 flex items-center pointer-events-none end-4 ps-3">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />

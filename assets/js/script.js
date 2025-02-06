@@ -67,19 +67,28 @@ function handleModal(type, dataAttributes = []) {
                             }
                         }
                     } else if (type === 'editTodo') {
-                        modal.querySelectorAll("input, textarea, select").forEach(input => {
+                        modal.querySelectorAll("input, textarea, select").forEach(async input => {
                             const name = input.name;
                             const value = trigger.dataset[name];
                             if (input.name === 'deadline') {
                                 input.value = new Date(value).toISOString().split('T')[0];
                             } else if (input.name === 'attachment') {
-                                // get current path project
-                                const rootPath = window.location.href.split("/").slice(0, -1).join("/");
-                                const publicPath = `${rootPath}/assets/public/`;
-                                const myFile = new File([getBlob(`${publicPath}${value}`)], value.split("/").pop());
-                                const dataTransfer = new DataTransfer();
-                                dataTransfer.items.add(myFile);
-                                // input.files = dataTransfer.files;
+                                try {
+                                    const rootPath = window.location.href.split("/").slice(0, -1).join("/");
+                                    const publicPath = `${rootPath}/assets/public/`;
+
+                                    const blob = await getBlob(`${publicPath}${value}`);
+                                    const myFile = new File([blob], value.split("/").pop(), { type: blob.type });
+                                    const dataTransfer = new DataTransfer();
+
+                                    dataTransfer.items.add(myFile);
+                                    input.files = dataTransfer.files;
+                                } catch (error) {
+                                    Swall.fire({
+                                        icon: "error",
+                                        title: "Gagal memuat lampiran"
+                                    });
+                                }
                             } else if (input.name === '_method') {
                                 input.value = 'PUT';
                             } else if (input.name === 'status') {
@@ -183,7 +192,8 @@ function handleDeleteTask() {
             fetch(`${window.location.href}?id=${id}`, {
                 method: 'DELETE'
             })
-            window.location.reload();
+            const currentUrl = window.location.href;
+            window.location.href = currentUrl;
         } catch (error) {
             console.error(error);
             Swall.fire({
