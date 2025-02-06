@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if($method === "POST" && isset($_POST['_method']) && $_POST['_method'] === "PUT"){
+if ($method === "POST" && isset($_POST['_method']) && $_POST['_method'] === "PUT") {
     $method = "PUT";
 }
 
@@ -95,7 +95,7 @@ foreach ($tasks as $task) {
                                     <p class="text-gray-600 line-clamp-2"><?= htmlspecialchars($task['description']) ?></p>
                                     <div class="flex items-center space-x-2">
                                         <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
-                                        <a href="<?= htmlspecialchars(assets("public/".$task['attachment'])) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                        <a href="<?= htmlspecialchars(assets("public/" . $task['attachment'])) ?>" target="_blank" class="text-blue-500 truncate hover:underline max-w-60">
                                             <?= basename($task['attachment']) ?>
                                         </a>
                                     </div>
@@ -112,7 +112,8 @@ foreach ($tasks as $task) {
                                         data-title="<?= htmlspecialchars($task['title']); ?>"
                                         data-description="<?= htmlspecialchars($task['description']); ?>"
                                         data-attachment="<?= htmlspecialchars($task['attachment']); ?>"
-                                        data-deadline="<?= htmlspecialchars($task['deadline']); ?>">
+                                        data-deadline="<?= htmlspecialchars($task['deadline']); ?>"
+                                        data-status="<?= htmlspecialchars($task['status']); ?>">
                                         Hapus
                                     </button>
                                     <div class="w-px h-full bg-[#CBD5E0]"></div>
@@ -123,7 +124,8 @@ foreach ($tasks as $task) {
                                         data-title="<?= htmlspecialchars($task['title']); ?>"
                                         data-description="<?= htmlspecialchars($task['description']); ?>"
                                         data-attachment="<?= htmlspecialchars($task['attachment']); ?>"
-                                        data-deadline="<?= htmlspecialchars($task['deadline']); ?>">
+                                        data-deadline="<?= htmlspecialchars($task['deadline']); ?>"
+                                        data-status="<?= htmlspecialchars($task['status']); ?>">
                                         Edit
                                     </button>
                                 </div>
@@ -150,7 +152,7 @@ foreach ($tasks as $task) {
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" />
+                    <input type="date" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" name="deadline" min="<?= date('Y-m-d'); ?>" value="<?= date('Y-m-d'); ?>" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
@@ -164,7 +166,6 @@ foreach ($tasks as $task) {
                         <option value="done">Done</option>
                     </select>
                 </div>
-
 
                 <div class="grid grid-cols-2 gap-4">
                     <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700" type="submit">Simpan</button>
@@ -191,7 +192,7 @@ foreach ($tasks as $task) {
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" />
+                    <input type="date" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" name="deadline" min="<?= date('Y-m-d'); ?>" value="<?= date('Y-m-d'); ?>" />
                 </div>
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
@@ -205,7 +206,6 @@ foreach ($tasks as $task) {
                         <option value="done">Done</option>
                     </select>
                 </div>
-
 
                 <div class="grid grid-cols-2 gap-4">
                     <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700" type="submit">Simpan</button>
@@ -225,7 +225,7 @@ foreach ($tasks as $task) {
                 <p class="text-gray-600 line-clamp-2" id="modal-description"></p>
                 <div class="flex items-center gap-2">
                     <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
-                    <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 truncate hover:underline max-sm:max-w-60"></a>
+                    <a id="modal-attachment" href="#" target="_blank" class="text-blue-500 truncate hover:underline max-w-60"></a>
                 </div>
                 <div class="flex items-center gap-2">
                     <img src="<?= assets('images/icons/clock.svg') ?>" alt="clock" class="w-5 h-5" />
@@ -233,22 +233,11 @@ foreach ($tasks as $task) {
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4">
-                <button class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700" onclick="deleteTask()">Ya, Hapus</button>
+                <button class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700" id="confirmDeleteTodoTrigger">Ya, Hapus</button>
                 <button id="closeDeleteTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100" type="button">Batal</button>
             </div>
         </div>
     </div>
 </main>
-
-<script>
-    function deleteTask() {
-        const id = document.getElementById('deleteTodoTrigger').dataset.id;
-        fetch(`<?= url('dashboard') ?>?id=${id}`, {
-            method: 'DELETE'
-        }).then(() => {
-            window.location.reload();
-        });
-    }
-</script>
 
 <?php include components('templates/footer'); ?>

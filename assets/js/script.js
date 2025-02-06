@@ -3,8 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSplashScreen();
     handleShowHidePassword();
     handleModal("addTodo");
-    handleModal("editTodo", ["id", "title", "description", "deadline", "attachment"]);
-    handleModal("deleteTodo", ["id", "title", "description", "deadline", "attachment"]);
+    handleModal("editTodo", ["id", "title", "description", "deadline", "attachment", "status"]);
+    handleModal("deleteTodo", ["id", "title", "description", "deadline", "attachment", "status"]);
+    handleDeleteTask();
+    handleInputDate();
 
     if (!isDesktop()) {
         toggleDropdown();
@@ -57,14 +59,16 @@ function handleModal(type, dataAttributes = []) {
                                 value = `Tenggat Waktu: ${date}`
                             }
                             if (element.tagName === "A") {
-                                element.setAttribute("href", value);
+                                const rootPath = window.location.href.split("/").slice(0, -1).join("/");
+                                const publicPath = `${rootPath}/assets/public/`;
+                                element.setAttribute("href", `${publicPath}${value}`);
                                 element.textContent = value.split("/").pop();
                             } else {
                                 element.textContent = value;
                             }
                         }
                     } else if (type === 'editTodo') {
-                        modal.querySelectorAll("input, textarea").forEach(input => {
+                        modal.querySelectorAll("input, textarea, select").forEach(input => {
                             const name = input.name;
                             const value = trigger.dataset[name];
                             if (input.name === 'deadline') {
@@ -73,6 +77,8 @@ function handleModal(type, dataAttributes = []) {
                                 // input.value = value.split("/").pop();
                             } else if (input.name === '_method') {
                                 input.value = 'PUT';
+                            } else if (input.name === 'status') {
+                                input.value = value;
                             } else {
                                 input.value = value;
                             }
@@ -159,6 +165,24 @@ function toggleFilterTodo() {
             filterTodoTriggers.forEach(t => t.classList.add("!bg-[#E2E8F0]"));
             trigger.classList.remove("!bg-[#E2E8F0]");
         });
+    });
+}
+
+function handleDeleteTask() {
+    const confirmDeleteTodoTrigger = document.getElementById("confirmDeleteTodoTrigger");
+    const id = document.getElementById("deleteTodoTrigger")?.getAttribute("data-id");
+
+    if (!confirmDeleteTodoTrigger || !id) return;
+
+    confirmDeleteTodoTrigger.addEventListener("click", () => {
+        try {
+            fetch(`${window.location.href}?id=${id}`, {
+                method: 'DELETE'
+            })
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+        }
     });
 }
 

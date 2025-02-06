@@ -4,7 +4,7 @@ session_start();
 //DB Connection
 $host = "localhost";
 $username = "root";
-$password = "root";
+$password = "";
 $dbname = "todo_list";
 
 $conn = new mysqli($host, $username, $password, $dbname);
@@ -141,7 +141,8 @@ function addTask($title, $description, $deadline, $attachment, $status)
     return $conn->query($sql);
 }
 
-function updateTask($id, $title, $description, $deadline, $attachment, $status){
+function updateTask($id, $title, $description, $deadline, $attachment, $status)
+{
     global $conn;
 
     $sql = "SELECT attachment FROM tasks WHERE id = $id AND user_id = " . $_SESSION['user']['id'];
