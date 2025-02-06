@@ -27,6 +27,14 @@ if ($method === 'POST') {
     $status = $_POST['status'];
 
     if (addTask($title, $description, $deadline, $attachment, $status)) {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Berhasil menambahkan tugas!',
+                icon: 'success',
+            })
+        </script>
+        ";
         header('Location: ' . url('dashboard'));
     } else {
         echo "
@@ -49,6 +57,13 @@ if ($method === 'PUT') {
     $status = $_POST['status'];
 
     if (updateTask($id, $title, $description, $deadline, $attachment, $status)) {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Berhasil mengubah tugas!',
+                icon: 'success',
+            })
+        ";
         header('Location: ' . url('dashboard'));
     } else {
         echo "
