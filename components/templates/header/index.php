@@ -18,6 +18,7 @@ require_once __DIR__ . '../../../../assets/helpers/libs.php';
     <link rel="stylesheet" href="<?= assets('css/style.css') ?>">
 
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>

@@ -37,7 +37,7 @@ if (strpos($currentPath, 'auth') !== false) {
                 <p class="font-semibold truncate max-w-48">
                     Halo, Hamdan Nurachid
                 </p>
-                <a class="font-semibold text-red-500 cursor-pointer hover:text-red-700">Keluar</a>
+                <a class="font-semibold text-red-500 cursor-pointer hover:text-red-700" href="<?= url('auth/signout') ?>">Keluar</a>
             </div>
         </div>
     </div>

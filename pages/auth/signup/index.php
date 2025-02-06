@@ -11,7 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result) {
         $success = true;
     } else {
-        echo "<script>alert('Gagal membuat akun!')</script>";
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Gagal membuat akun!',
+            })
+        </script>
+        ";
     }
 }
 ?>

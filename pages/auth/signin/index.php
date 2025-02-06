@@ -7,7 +7,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    signin($username, $password);
+    $result = signin($username, $password);
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $_SESSION['user'] = $user;
+        header('Location: ' . url('dashboard'));
+    } else {
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Username atau password salah!',
+            })
+        </script>
+        ";
+    }
 }
 ?>
 

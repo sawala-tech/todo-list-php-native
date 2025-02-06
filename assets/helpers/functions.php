@@ -34,15 +34,8 @@ function signin($username, $password)
     $password = hash('sha256', cleanInput($password));
 
     $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-    $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-        $_SESSION['user'] = $user;
-        header('Location: ' . url('dashboard'));
-    } else {
-        echo "<script>alert('Username atau password salah!')</script>";
-    }
+    return $conn->query($sql);
 }
 
 function signup($username, $password)

@@ -29,7 +29,14 @@ if ($method === 'POST') {
     if (addTask($title, $description, $deadline, $attachment, $status)) {
         header('Location: ' . url('dashboard'));
     } else {
-        echo "<script>alert('Gagal menambahkan tugas')</script>";
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Gagal menambahkan tugas!',
+                icon: 'error',
+            })
+        </script>
+        ";
     }
 }
 
@@ -44,7 +51,14 @@ if ($method === 'PUT') {
     if (updateTask($id, $title, $description, $deadline, $attachment, $status)) {
         header('Location: ' . url('dashboard'));
     } else {
-        echo "<script>alert('Gagal mengubah tugas')</script>";
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Gagal mengubah tugas!',
+                icon: 'error',
+            })
+        </script>
+        ";
     }
 }
 

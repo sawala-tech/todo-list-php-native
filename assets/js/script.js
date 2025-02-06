@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     handleModal("editTodo", ["id", "title", "description", "deadline", "attachment", "status"]);
     handleModal("deleteTodo", ["id", "title", "description", "deadline", "attachment", "status"]);
     handleDeleteTask();
-    handleInputDate();
 
     if (!isDesktop()) {
         toggleDropdown();
@@ -182,6 +181,10 @@ function handleDeleteTask() {
             window.location.reload();
         } catch (error) {
             console.error(error);
+            Swall.fire({
+                icon: "error",
+                title: "Gagal menghapus tugas"
+            });
         }
     });
 }
