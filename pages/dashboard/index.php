@@ -114,7 +114,7 @@ foreach ($tasks as $task) {
         <?php endforeach; ?>
     </div>
 
-    <!-- Add/Edit Todo Modal -->
+    <!-- Add Todo Modal -->
     <div id="addTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
         <div class="w-full md:max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6 max-sm:mx-4">
             <h2 class="mb-2 text-xl font-bold">Tugas Baru</h2>
@@ -146,8 +146,47 @@ foreach ($tasks as $task) {
 
 
                 <div class="grid grid-cols-2 gap-4">
-                    <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700">Simpan</button>
+                    <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700" type="submit">Simpan</button>
                     <button id="closeAddTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Todo Modal -->
+    <div id="editTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
+        <div class="w-full md:max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6 max-sm:mx-4">
+            <h2 class="mb-2 text-xl font-bold">Tugas Baru</h2>
+            <form class="flex flex-col space-y-4" action="<?= url('dashboard') ?>" method="POST" enctype="multipart/form-data">
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Nama Tugas</label>
+                    <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" name="title" />
+                </div>
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Deskripsi</label>
+                    <textarea class="md:w-3/4 min-h-20 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Deskripsi Tugas" name="description"></textarea>
+                </div>
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Tenggat Waktu</label>
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" placeholder="Pilih Tanggal" name="deadline" />
+                </div>
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="text-sm font-semibold md:w-1/4">Lampiran/File</label>
+                    <input type="file" class="md:w-3/4 h-10py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" name="attachment" />
+                </div>
+                <div class="flex gap-2 md:items-center max-sm:flex-col">
+                    <label class="md:w-1/4">Status</label>
+                    <select class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm" name="status">
+                        <option value="open">Open</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="done">Done</option>
+                    </select>
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="px-4 py-2 mt-4 text-white rounded-md bg-emerald-500 hover:bg-emerald-700" type="submit">Simpan</button>
+                    <button id="closeEditTodoModal" class="px-4 py-2 mt-4 text-black bg-white border border-gray-400 rounded-md hover:bg-gray-100" type="button">Batal</button>
                 </div>
             </form>
         </div>

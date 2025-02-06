@@ -2,8 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded and parsed");
     handleSplashScreen();
     handleShowHidePassword();
-    handleModal("deleteTodo", ["id", "title", "description", "deadline", "attachment"]);
     handleModal("addTodo");
+    handleModal("editTodo", ["id", "title", "description", "deadline", "attachment"]);
+    handleModal("deleteTodo", ["id", "title", "description", "deadline", "attachment"]);
 
     if (!isDesktop()) {
         toggleDropdown();
@@ -43,24 +44,39 @@ function handleModal(type, dataAttributes = []) {
         trigger.addEventListener("click", () => {
             if (dataAttributes.length) {
                 dataAttributes.forEach(attr => {
-                    const element = document.getElementById(`modal-${attr}`);
-                    if (element) {
-                        let value = trigger.dataset[attr];
-                        if (attr === "deadline") {
-                            const date = new Date(value).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric"
-                            }).replace(/ /g, " ");
-
-                            value = `Tenggat Waktu: ${date}`
+                    if (type === 'deleteTodo') {
+                        const element = document.getElementById(`modal-${attr}`);
+                        if (element) {
+                            let value = trigger.dataset[attr];
+                            if (attr === "deadline") {
+                                const date = new Date(value).toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric"
+                                }).replace(/ /g, " ");
+                                value = `Tenggat Waktu: ${date}`
+                            }
+                            if (element.tagName === "A") {
+                                element.setAttribute("href", value);
+                                element.textContent = value.split("/").pop();
+                            } else {
+                                element.textContent = value;
+                            }
                         }
-                        if (element.tagName === "A") {
-                            element.setAttribute("href", value);
-                            element.textContent = value.split("/").pop();
-                        } else {
-                            element.textContent = value;
-                        }
+                    } else if (type === 'editTodo') {
+                        modal.querySelectorAll("input, textarea").forEach(input => {
+                            const name = input.name;
+                            const value = trigger.dataset[name];
+                            if (input.name === 'deadline') {
+                                input.value = new Date(value).toLocaleDateString("en-GB");
+                            } else if (input.name === 'attachment') {
+                                // input.value = value.split("/").pop();
+                            } else {
+                                input.value = value;
+                            }
+                        });
+                    } else {
+                        return;
                     }
                 });
             }
@@ -70,6 +86,15 @@ function handleModal(type, dataAttributes = []) {
 
     closeModal.addEventListener("click", () => toggleModal(modal, false));
     modal.addEventListener("click", e => e.target === modal && toggleModal(modal, false));
+
+    // clear modal input value
+    modal.addEventListener("click", e => {
+        if (e.target === modal) {
+            modal.querySelectorAll("input, textarea").forEach(input => {
+                input.value = "";
+            });
+        }
+    });
 }
 
 function toggleModal(modal, show) {
