@@ -71,6 +71,8 @@ function handleModal(type, dataAttributes = []) {
                                 input.value = new Date(value).toLocaleDateString("en-GB");
                             } else if (input.name === 'attachment') {
                                 // input.value = value.split("/").pop();
+                            } else if (input.name === '_method') {
+                                input.value = 'PUT';
                             } else {
                                 input.value = value;
                             }

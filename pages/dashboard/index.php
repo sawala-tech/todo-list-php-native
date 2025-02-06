@@ -12,8 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     deleteTask($id);
 }
 
-//check if http method is post
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$method = $_SERVER['REQUEST_METHOD'];
+
+if($method === "POST" && isset($_POST['_method']) && $_POST['_method'] === "PUT"){
+    $method = "PUT";
+}
+
+
+if ($method === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $deadline = $_POST['deadline'];
@@ -24,6 +30,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ' . url('dashboard'));
     } else {
         echo "<script>alert('Gagal menambahkan tugas')</script>";
+    }
+}
+
+if ($method === 'PUT') {
+    $id = $_POST['id'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $deadline = $_POST['deadline'];
+    $attachment = $_FILES['attachment'];
+    $status = $_POST['status'];
+
+    if (updateTask($id, $title, $description, $deadline, $attachment, $status)) {
+        header('Location: ' . url('dashboard'));
+    } else {
+        echo "<script>alert('Gagal mengubah tugas')</script>";
     }
 }
 
@@ -74,7 +95,7 @@ foreach ($tasks as $task) {
                                     <p class="text-gray-600 line-clamp-2"><?= htmlspecialchars($task['description']) ?></p>
                                     <div class="flex items-center space-x-2">
                                         <img src="<?= assets('images/icons/files.svg') ?>" alt="files" class="w-5 h-5" />
-                                        <a href="<?= htmlspecialchars($task['attachment']) ?>" target="_blank" class="text-blue-500 hover:underline">
+                                        <a href="<?= htmlspecialchars(assets("public/".$task['attachment'])) ?>" target="_blank" class="text-blue-500 hover:underline">
                                             <?= basename($task['attachment']) ?>
                                         </a>
                                     </div>
@@ -156,8 +177,10 @@ foreach ($tasks as $task) {
     <!-- Edit Todo Modal -->
     <div id="editTodoModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-gray-900 bg-opacity-50">
         <div class="w-full md:max-w-[650px] p-6 bg-white rounded-2xl shadow-lg flex flex-col space-y-6 max-sm:mx-4">
-            <h2 class="mb-2 text-xl font-bold">Tugas Baru</h2>
+            <h2 class="mb-2 text-xl font-bold">Edit Tugas</h2>
             <form class="flex flex-col space-y-4" action="<?= url('dashboard') ?>" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT" />
+                <input type="hidden" name="id" id="editTodoId" />
                 <div class="flex gap-2 md:items-center max-sm:flex-col">
                     <label class="text-sm font-semibold md:w-1/4">Nama Tugas</label>
                     <input type="text" class="md:w-3/4 h-10 px-3 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Judul Tugas" name="title" />

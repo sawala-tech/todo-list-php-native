@@ -4,7 +4,7 @@ session_start();
 //DB Connection
 $host = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "todo_list";
 
 $conn = new mysqli($host, $username, $password, $dbname);
@@ -86,15 +86,15 @@ function getTasks()
 
 function deleteFile($file)
 {
-    if (file_exists($file)) {
-        unlink($file);
+    $filePath = __DIR__ . "/../../assets/public/" . $file;
+    if (file_exists($filePath)) {
+        unlink($filePath);
     }
 }
 
 function deleteTask($id)
 {
     global $conn;
-    //get the attachment file path
     $sql = "SELECT attachment FROM tasks WHERE id = $id AND user_id = " . $_SESSION['user']['id'];
     $result = $conn->query($sql);
 
@@ -111,12 +111,11 @@ function deleteTask($id)
 function saveFile($file)
 {
     $target_dir = __DIR__ . "/../../assets/public/";
-
-    //i want new name for the file so i will use time() function
-    $target_file = $target_dir . basename(time() . "_" . $file['name']);
+    $baseName = basename(time() . "_" . $file['name']);
+    $target_file = $target_dir . $baseName;
 
     if (move_uploaded_file($file['tmp_name'], $target_file)) {
-        return $target_file;
+        return $baseName;
     } else {
         return false;
     }
@@ -129,7 +128,7 @@ function addTask($title, $description, $deadline, $attachment, $status)
 
     $title = cleanInput($title);
     $description = cleanInput($description);
-    $deadline = cleanInput($deadline);
+    $deadline = $deadline;
     $attachment = saveFile($attachment);
     $status = cleanInput($status);
 
@@ -139,5 +138,33 @@ function addTask($title, $description, $deadline, $attachment, $status)
 
     $sql = "INSERT INTO tasks (title, description, deadline, attachment, status, user_id) VALUES ('$title', '$description', '$deadline', '$attachment', '$status', $user_id)";
 
+    return $conn->query($sql);
+}
+
+function updateTask($id, $title, $description, $deadline, $attachment, $status){
+    global $conn;
+
+    $sql = "SELECT attachment FROM tasks WHERE id = $id AND user_id = " . $_SESSION['user']['id'];
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $file = $result->fetch_assoc()['attachment'];
+    }
+
+    $title = cleanInput($title);
+    $description = cleanInput($description);
+    $deadline = $deadline;
+    //change deadline to format yyyy-mm-dd
+    $deadline = date('Y-m-d', strtotime($deadline));
+    $status = cleanInput($status);
+
+    if ($attachment['name']) {
+        $attachment = saveFile($attachment);
+        deleteFile($file);
+    } else {
+        $attachment = $file;
+    }
+
+    $sql = "UPDATE tasks SET title = '$title', description = '$description', deadline = '$deadline', attachment = '$attachment', status = '$status' WHERE id = $id AND user_id = " . $_SESSION['user']['id'];
     return $conn->query($sql);
 }
