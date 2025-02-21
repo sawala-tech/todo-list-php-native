@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="password" class="text-sm font-semibold">Password <span class="text-red-500">*</span></label>
                 <div class="relative">
                     <input type="password" id="password" name="password" class="w-full h-12 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500" required />
-                    <button type="button" class="absolute z-40 transform -translate-y-1/2 cursor-pointer top-1/2 right-4" id="cta-show-hide-password">
+                    <button type="button" class="absolute z-40 transform -translate-y-1/2 cursor-pointer top-9 right-4" id="cta-show-hide-password">
                         <img src="<?= assets("images/icons/open-eye.svg") ?>" alt="open-eye-image" class="hidden w-6 h-6" id="open-eye">
                         <img src="<?= assets("images/icons/close-eye.svg") ?>" alt="close-eye-image" class="block w-6 h-6" id="close-eye">
                     </button>

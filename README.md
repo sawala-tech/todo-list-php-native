@@ -1,6 +1,6 @@
 # Todo List Aplication
 
-A Simple todo list aplication for class promotion test high school bhakti nusantara.
+A Simple todo list aplication for class promotion test high school.
 
 ## Stack Used
 
