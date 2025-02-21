@@ -1,8 +1,8 @@
 RewriteEngine On
 
 # Redirect root URL to /dashboard (for localhost)
-RewriteCond %{REQUEST_URI} ^/todo-list-bhaknus/$
-RewriteRule ^$ /todo-list-bhaknus/dashboard [R=302,L]
+RewriteCond %{REQUEST_URI} ^/todo-list-php-native/$
+RewriteRule ^$ /todo-list-php-native/dashboard [R=302,L]
 
 # Redirect root URL to /dashboard (for live server)
 RewriteCond %{REQUEST_URI} ^/$
