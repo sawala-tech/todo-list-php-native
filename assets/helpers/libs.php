@@ -10,7 +10,7 @@
 if (!function_exists('assets')) {
     function assets($path)
     {
-        return '/todo-list-bhaknus/assets/' . $path;
+        return '/todo-list-php-native/assets/' . $path;
     }
 }
 
@@ -36,6 +36,6 @@ if (!function_exists('components')) {
 if (!function_exists('url')) {
     function url($path)
     {
-        return '/todo-list-bhaknus/' . $path;
+        return '/todo-list-php-native/' . $path;
     }
 }
